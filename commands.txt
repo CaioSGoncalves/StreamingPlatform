@@ -20,6 +20,13 @@ kubectl delete deployment ksql-cli
 Run the following to tell ksqlDB to read from the beginning of each stream:
 SET 'auto.offset.reset' = 'earliest';
 
+DROP STREAM IF EXISTS MOVIE_STREAM DELETE TOPIC;
+DROP TABLE IF EXISTS MOVIE_TABLE DELETE TOPIC;
+
+To scale ksqlDB horizontally, run additional ksqlDB servers with the same ksql.service.id and ksql.streams.bootstrap.servers settings.
+
+
+movie-topic:
 kubectl -n kafka delete pod kafka-producer 
 kubectl -n kafka run kafka-producer -ti --image=strimzi/kafka:0.19.0-kafka-2.5.0 --rm=true --restart=Never -- bin/kafka-console-producer.sh --broker-list my-cluster-kafka-bootstrap:9092 --topic movie-topic --property "parse.key=true" --property "key.separator=:"
 1:{"id": 1, "name": "Movie1"}
@@ -27,8 +34,9 @@ kubectl -n kafka run kafka-producer -ti --image=strimzi/kafka:0.19.0-kafka-2.5.0
 3:{"id": 3, "name": "Movie3"}
 1:{"id": 1, "name": "Movie11"}
 
-
-To scale ksqlDB horizontally, run additional ksqlDB servers with the same ksql.service.id and ksql.streams.bootstrap.servers settings.
-
-DROP STREAM IF EXISTS MOVIE_STREAM DELETE TOPIC;
-DROP TABLE IF EXISTS MOVIE_TABLE DELETE TOPIC;
+ratings-topic:
+kubectl -n kafka delete pod kafka-producer 
+kubectl -n kafka run kafka-producer -ti --image=strimzi/kafka:0.19.0-kafka-2.5.0 --rm=true --restart=Never -- bin/kafka-console-producer.sh --broker-list my-cluster-kafka-bootstrap:9092 --topic ratings-topic
+{"movie_id": 1, "stars": 5}
+{"movie_id": 1, "stars": 4}
+{"movie_id": 2, "stars": 2}
