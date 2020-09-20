@@ -13,3 +13,10 @@ StreamingPlatform: Apache Kafka + Kubernetes + ksqlDB
 <p align="center"> 
 <img src="diagrams/movie_ratings_join.png">
 </p>
+
+
+# ksql Stream vs Table example:
+
+<p align="center"> 
+<img src="diagrams/ksql_example.png">
+</p>
