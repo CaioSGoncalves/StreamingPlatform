@@ -3,9 +3,6 @@ Quick Start: https://strimzi.io/quickstarts/
 
 kubectl create namespace kafka
 kubectl apply -f 'https://strimzi.io/install/latest?namespace=kafka' -n kafka
-
-
-kubectl apply -f https://strimzi.io/examples/latest/kafka/kafka-persistent-single.yaml -n kafka 
 kubectl wait kafka/my-cluster --for=condition=Ready --timeout=300s -n kafka 
 
 
@@ -28,11 +25,8 @@ kubectl -n kafka run kafka-producer -ti --image=strimzi/kafka:0.19.0-kafka-2.5.0
 1:{"id": 1, "name": "Movie1"}
 2:{"id": 2, "name": "Movie2"}
 3:{"id": 3, "name": "Movie3"}
+1:{"id": 1, "name": "Movie11"}
 
-kubectl -n kafka run kafka-producer -ti --image=strimzi/kafka:0.19.0-kafka-2.5.0 --rm=true --restart=Never -- bin/kafka-console-producer.sh --broker-list my-cluster-kafka-bootstrap:9092 --topic movie-topic
-{"id": 1, "name": "Movie1"}
-{"id": 2, "name": "Movie2"}
-{"id": 3, "name": "Movie3"}
 
 To scale ksqlDB horizontally, run additional ksqlDB servers with the same ksql.service.id and ksql.streams.bootstrap.servers settings.
 
